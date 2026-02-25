@@ -7,7 +7,8 @@
 
 const loanValues = Object.values(loans);
 const totalDebt = loanValues.reduce((acc, loan) => acc + loan.amount, 0);
-const pensionPrincipalMonthly = 400_000;
+const pensionMaturityMonths = 24;
+const pensionPrincipalMonthly = Math.ceil(loans.pension.amount / pensionMaturityMonths);
 const shinheePrincipalMonthlyStartYear2 = 520_000;
 
 Chart.defaults.font.family = "'Noto Sans KR', sans-serif";
