@@ -1,5 +1,5 @@
 ﻿const loans = {
-  shinhee: { name: '신희타모기지', amount: 232_119_000, rate: 1.6, monthlyInterest: 309_492, type: 'mortgage' },
+  shinhee: { name: '신희타 모기지', amount: 232_119_000, rate: 1.6, monthlyInterest: 309_492, type: 'mortgage' },
   busan: { name: '부산은행 대출', amount: 43_000_000, rate: 4.5, monthlyInterest: 161_250, type: 'credit' },
   samsung: { name: '삼성생명 대출', amount: 11_170_000, rate: 4.12, monthlyInterest: 38_350, type: 'insurance' },
   pension: { name: '연금저축 담보대출', amount: 9_500_000, rate: 3.0, monthlyInterest: 23_750, type: 'pension' }
