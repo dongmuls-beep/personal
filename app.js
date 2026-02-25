@@ -9,7 +9,15 @@ const loanValues = Object.values(loans);
 const totalDebt = loanValues.reduce((acc, loan) => acc + loan.amount, 0);
 const pensionMaturityMonths = 24;
 const pensionPrincipalMonthly = Math.ceil(loans.pension.amount / pensionMaturityMonths);
-const shinheePrincipalMonthlyStartYear2 = 520_000;
+const shinheeGraceMonths = 12;
+const shinheeLoanTermMonths = 360;
+const shinheeMonthlyRate = loans.shinhee.rate / 100 / 12;
+const shinheeAmortizationMonths = shinheeLoanTermMonths - shinheeGraceMonths;
+const shinheeScheduledMonthlyPayment = getEqualPrincipalAndInterestPayment(
+  loans.shinhee.amount,
+  shinheeMonthlyRate,
+  shinheeAmortizationMonths
+);
 
 Chart.defaults.font.family = "'Noto Sans KR', sans-serif";
 Chart.defaults.maintainAspectRatio = false;
@@ -115,11 +123,11 @@ function initSimulationCharts() {
   cashFlowChart = new Chart(cashFlowCtx, {
     type: 'bar',
     data: {
-      labels: ['1년차(현재)', '2년차(신희타 원금 시작)'],
+      labels: ['1년차(거치기간)', '2년차(원리금균등)'],
       datasets: [
         { label: '이자', data: [], backgroundColor: '#94A3B8' },
         { label: '연금 원금', data: [pensionPrincipalMonthly, pensionPrincipalMonthly], backgroundColor: '#3B82F6' },
-        { label: '신희타 원금', data: [0, shinheePrincipalMonthlyStartYear2], backgroundColor: '#10B981' },
+        { label: '신희타 약정 원금', data: [0, 0], backgroundColor: '#10B981' },
         { label: '추가 상환', data: [], backgroundColor: '#EF4444' }
       ]
     },
@@ -142,6 +150,23 @@ function getMonthlyInterest(balance, annualRate) {
   return Math.round(balance * annualRate / 100 / 12);
 }
 
+function getEqualPrincipalAndInterestPayment(principal, monthlyRate, months) {
+  if (principal <= 0 || months <= 0) return 0;
+  if (monthlyRate <= 0) return Math.round(principal / months);
+  return Math.round((principal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -months)));
+}
+
+function getShinheeMonthlyBreakdown(month, balance) {
+  const safeBalance = Math.max(0, Math.round(Number(balance) || 0));
+  const interest = getMonthlyInterest(safeBalance, loans.shinhee.rate);
+  if (month <= shinheeGraceMonths || safeBalance <= 0) {
+    return { principal: 0, interest, payment: interest };
+  }
+
+  const principal = Math.min(safeBalance, Math.max(0, shinheeScheduledMonthlyPayment - interest));
+  return { principal, interest, payment: principal + interest };
+}
+
 function projectLoanBalances(extraMonthlyPayment, months) {
   const extra = Math.max(0, Number(extraMonthlyPayment) || 0);
   const balances = {
@@ -154,11 +179,11 @@ function projectLoanBalances(extraMonthlyPayment, months) {
   for (let month = 1; month <= months; month++) {
     const busanPrincipal = Math.min(extra, balances.busan);
     const pensionPrincipal = Math.min(pensionPrincipalMonthly, balances.pension);
-    const shinheePrincipal = month >= 13 ? Math.min(shinheePrincipalMonthlyStartYear2, balances.shinhee) : 0;
+    const shinheeBreakdown = getShinheeMonthlyBreakdown(month, balances.shinhee);
 
     balances.busan -= busanPrincipal;
     balances.pension -= pensionPrincipal;
-    balances.shinhee -= shinheePrincipal;
+    balances.shinhee -= shinheeBreakdown.principal;
   }
 
   return balances;
@@ -179,16 +204,18 @@ function buildPhasePaymentBreakdown(extraMonthlyPayment) {
   const phase1Balances = projectLoanBalances(extraMonthlyPayment, 0);
   const phase2Balances = projectLoanBalances(extraMonthlyPayment, 12);
   const extra = Math.max(0, Number(extraMonthlyPayment) || 0);
+  const phase1Shinhee = getShinheeMonthlyBreakdown(1, phase1Balances.shinhee);
+  const phase2Shinhee = getShinheeMonthlyBreakdown(13, phase2Balances.shinhee);
 
   const phase1 = addPhaseTotals({
     principal: {
-      shinhee: 0,
+      shinhee: phase1Shinhee.principal,
       busan: Math.min(extra, phase1Balances.busan),
       samsung: 0,
       pension: Math.min(pensionPrincipalMonthly, phase1Balances.pension)
     },
     interest: {
-      shinhee: getMonthlyInterest(phase1Balances.shinhee, loans.shinhee.rate),
+      shinhee: phase1Shinhee.interest,
       busan: getMonthlyInterest(phase1Balances.busan, loans.busan.rate),
       samsung: getMonthlyInterest(phase1Balances.samsung, loans.samsung.rate),
       pension: getMonthlyInterest(phase1Balances.pension, loans.pension.rate)
@@ -197,13 +224,13 @@ function buildPhasePaymentBreakdown(extraMonthlyPayment) {
 
   const phase2 = addPhaseTotals({
     principal: {
-      shinhee: Math.min(shinheePrincipalMonthlyStartYear2, phase2Balances.shinhee),
+      shinhee: phase2Shinhee.principal,
       busan: Math.min(extra, phase2Balances.busan),
       samsung: 0,
       pension: Math.min(pensionPrincipalMonthly, phase2Balances.pension)
     },
     interest: {
-      shinhee: getMonthlyInterest(phase2Balances.shinhee, loans.shinhee.rate),
+      shinhee: phase2Shinhee.interest,
       busan: getMonthlyInterest(phase2Balances.busan, loans.busan.rate),
       samsung: getMonthlyInterest(phase2Balances.samsung, loans.samsung.rate),
       pension: getMonthlyInterest(phase2Balances.pension, loans.pension.rate)
