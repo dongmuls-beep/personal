@@ -207,6 +207,51 @@
                             월 소득의 변동을 고려해 생활비와 이사비를 먼저 고정하고,
                             남는 금액을 부산은행에 집중 상환합니다. 연체 없이 상환 흐름을 고정화하는 단계입니다.
                         </p>
+                        <div class="bg-emerald-50 border border-emerald-100 rounded-lg p-4 mb-6">
+                            <h4 class="font-bold text-emerald-900 mb-2">월 납부액 내역 (1개월차 기준)</h4>
+                            <p class="text-xs text-emerald-700 mb-3">원리금 상환 및 이자 내역은 본문 수치 + 추가 상환액(슬라이더) 기준으로 자동 계산됩니다.</p>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-slate-700">
+                                    <thead class="text-xs uppercase tracking-wide text-slate-500">
+                                        <tr>
+                                            <th class="py-2 pr-2 text-left">항목</th>
+                                            <th class="py-2 px-2 text-right">원금 상환</th>
+                                            <th class="py-2 pl-2 text-right">이자</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-emerald-100">
+                                        <tr>
+                                            <td class="py-2 pr-2">신희타 모기지</td>
+                                            <td id="phase1PrincipalShinhee" class="py-2 px-2 text-right">-</td>
+                                            <td id="phase1InterestShinhee" class="py-2 pl-2 text-right">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 pr-2">부산은행 대출</td>
+                                            <td id="phase1PrincipalBusan" class="py-2 px-2 text-right">-</td>
+                                            <td id="phase1InterestBusan" class="py-2 pl-2 text-right">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 pr-2">삼성생명 대출</td>
+                                            <td id="phase1PrincipalSamsung" class="py-2 px-2 text-right">-</td>
+                                            <td id="phase1InterestSamsung" class="py-2 pl-2 text-right">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 pr-2">연금저축 담보대출</td>
+                                            <td id="phase1PrincipalPension" class="py-2 px-2 text-right">-</td>
+                                            <td id="phase1InterestPension" class="py-2 pl-2 text-right">-</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="border-t border-emerald-200 font-semibold text-emerald-900">
+                                            <td class="pt-2 pr-2">월 합계</td>
+                                            <td id="phase1PrincipalTotal" class="pt-2 px-2 text-right">-</td>
+                                            <td id="phase1InterestTotal" class="pt-2 pl-2 text-right">-</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <p class="text-sm font-semibold text-emerald-900 mt-3">총 월 납부액: <span id="phase1PaymentTotal">-</span></p>
+                        </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                             <div class="bg-slate-50 p-4 rounded-lg">
                                 <h4 class="font-bold text-slate-700 mb-2">목표</h4>
@@ -239,6 +284,51 @@
                             2년차에는 고정이사비/생활비 지출이 누적될 수 있어 월 상환 여력을 점검합니다.
                             상환 목표를 유지할 수 없는 구간은 우선순위를 고정비 축소로 보완합니다.
                         </p>
+                        <div class="bg-amber-50 border border-amber-100 rounded-lg p-4 mb-6">
+                            <h4 class="font-bold text-amber-900 mb-2">월 납부액 내역 (13개월차 기준)</h4>
+                            <p class="text-xs text-amber-700 mb-3">1년차 12개월 상환 후 잔액으로 계산한 2년차 시작 시점의 월 납부액입니다.</p>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-slate-700">
+                                    <thead class="text-xs uppercase tracking-wide text-slate-500">
+                                        <tr>
+                                            <th class="py-2 pr-2 text-left">항목</th>
+                                            <th class="py-2 px-2 text-right">원금 상환</th>
+                                            <th class="py-2 pl-2 text-right">이자</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-amber-100">
+                                        <tr>
+                                            <td class="py-2 pr-2">신희타 모기지</td>
+                                            <td id="phase2PrincipalShinhee" class="py-2 px-2 text-right">-</td>
+                                            <td id="phase2InterestShinhee" class="py-2 pl-2 text-right">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 pr-2">부산은행 대출</td>
+                                            <td id="phase2PrincipalBusan" class="py-2 px-2 text-right">-</td>
+                                            <td id="phase2InterestBusan" class="py-2 pl-2 text-right">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 pr-2">삼성생명 대출</td>
+                                            <td id="phase2PrincipalSamsung" class="py-2 px-2 text-right">-</td>
+                                            <td id="phase2InterestSamsung" class="py-2 pl-2 text-right">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 pr-2">연금저축 담보대출</td>
+                                            <td id="phase2PrincipalPension" class="py-2 px-2 text-right">-</td>
+                                            <td id="phase2InterestPension" class="py-2 pl-2 text-right">-</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="border-t border-amber-200 font-semibold text-amber-900">
+                                            <td class="pt-2 pr-2">월 합계</td>
+                                            <td id="phase2PrincipalTotal" class="pt-2 px-2 text-right">-</td>
+                                            <td id="phase2InterestTotal" class="pt-2 pl-2 text-right">-</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <p class="text-sm font-semibold text-amber-900 mt-3">총 월 납부액: <span id="phase2PaymentTotal">-</span></p>
+                        </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                             <div class="bg-slate-50 p-4 rounded-lg">
                                 <h4 class="font-bold text-slate-700 mb-2">관리 포인트</h4>

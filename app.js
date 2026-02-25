@@ -131,6 +131,113 @@ function initSimulationCharts() {
   });
 }
 
+function formatCurrency(value) {
+  const amount = Math.max(0, Math.round(Number(value) || 0));
+  return `${amount.toLocaleString()}원`;
+}
+
+function getMonthlyInterest(balance, annualRate) {
+  if (balance <= 0) return 0;
+  return Math.round(balance * annualRate / 100 / 12);
+}
+
+function projectLoanBalances(extraMonthlyPayment, months) {
+  const extra = Math.max(0, Number(extraMonthlyPayment) || 0);
+  const balances = {
+    shinhee: loans.shinhee.amount,
+    busan: loans.busan.amount,
+    samsung: loans.samsung.amount,
+    pension: loans.pension.amount
+  };
+
+  for (let month = 1; month <= months; month++) {
+    const busanPrincipal = Math.min(extra, balances.busan);
+    const pensionPrincipal = Math.min(pensionPrincipalMonthly, balances.pension);
+    const shinheePrincipal = month >= 13 ? Math.min(shinheePrincipalMonthlyStartYear2, balances.shinhee) : 0;
+
+    balances.busan -= busanPrincipal;
+    balances.pension -= pensionPrincipal;
+    balances.shinhee -= shinheePrincipal;
+  }
+
+  return balances;
+}
+
+function addPhaseTotals(phase) {
+  const principalTotal = Object.values(phase.principal).reduce((sum, value) => sum + value, 0);
+  const interestTotal = Object.values(phase.interest).reduce((sum, value) => sum + value, 0);
+  return {
+    ...phase,
+    principalTotal,
+    interestTotal,
+    paymentTotal: principalTotal + interestTotal
+  };
+}
+
+function buildPhasePaymentBreakdown(extraMonthlyPayment) {
+  const phase1Balances = projectLoanBalances(extraMonthlyPayment, 0);
+  const phase2Balances = projectLoanBalances(extraMonthlyPayment, 12);
+  const extra = Math.max(0, Number(extraMonthlyPayment) || 0);
+
+  const phase1 = addPhaseTotals({
+    principal: {
+      shinhee: 0,
+      busan: Math.min(extra, phase1Balances.busan),
+      samsung: 0,
+      pension: Math.min(pensionPrincipalMonthly, phase1Balances.pension)
+    },
+    interest: {
+      shinhee: getMonthlyInterest(phase1Balances.shinhee, loans.shinhee.rate),
+      busan: getMonthlyInterest(phase1Balances.busan, loans.busan.rate),
+      samsung: getMonthlyInterest(phase1Balances.samsung, loans.samsung.rate),
+      pension: getMonthlyInterest(phase1Balances.pension, loans.pension.rate)
+    }
+  });
+
+  const phase2 = addPhaseTotals({
+    principal: {
+      shinhee: Math.min(shinheePrincipalMonthlyStartYear2, phase2Balances.shinhee),
+      busan: Math.min(extra, phase2Balances.busan),
+      samsung: 0,
+      pension: Math.min(pensionPrincipalMonthly, phase2Balances.pension)
+    },
+    interest: {
+      shinhee: getMonthlyInterest(phase2Balances.shinhee, loans.shinhee.rate),
+      busan: getMonthlyInterest(phase2Balances.busan, loans.busan.rate),
+      samsung: getMonthlyInterest(phase2Balances.samsung, loans.samsung.rate),
+      pension: getMonthlyInterest(phase2Balances.pension, loans.pension.rate)
+    }
+  });
+
+  return { phase1, phase2 };
+}
+
+function updateText(id, value) {
+  const element = document.getElementById(id);
+  if (element) element.innerText = value;
+}
+
+function applyPhaseBreakdown(prefix, phase) {
+  updateText(`${prefix}PrincipalShinhee`, formatCurrency(phase.principal.shinhee));
+  updateText(`${prefix}PrincipalBusan`, formatCurrency(phase.principal.busan));
+  updateText(`${prefix}PrincipalSamsung`, formatCurrency(phase.principal.samsung));
+  updateText(`${prefix}PrincipalPension`, formatCurrency(phase.principal.pension));
+  updateText(`${prefix}InterestShinhee`, formatCurrency(phase.interest.shinhee));
+  updateText(`${prefix}InterestBusan`, formatCurrency(phase.interest.busan));
+  updateText(`${prefix}InterestSamsung`, formatCurrency(phase.interest.samsung));
+  updateText(`${prefix}InterestPension`, formatCurrency(phase.interest.pension));
+  updateText(`${prefix}PrincipalTotal`, formatCurrency(phase.principalTotal));
+  updateText(`${prefix}InterestTotal`, formatCurrency(phase.interestTotal));
+  updateText(`${prefix}PaymentTotal`, formatCurrency(phase.paymentTotal));
+}
+
+function updateTimelinePaymentDetails(extraMonthlyPayment) {
+  const breakdown = buildPhasePaymentBreakdown(extraMonthlyPayment);
+  applyPhaseBreakdown('phase1', breakdown.phase1);
+  applyPhaseBreakdown('phase2', breakdown.phase2);
+  return breakdown;
+}
+
 function updateSimulation(extraMonthlyPayment) {
   const extra = Number(extraMonthlyPayment) || 0;
   const valueDisplay = document.getElementById('paymentValueDisplay');
@@ -163,8 +270,11 @@ function updateSimulation(extraMonthlyPayment) {
   if (result1) result1.innerText = `${year1Balance.toLocaleString()} 만원`;
   if (result2) result2.innerText = `${year2Balance.toLocaleString()} 만원`;
 
-  cashFlowChart.data.datasets[0].data = [530_000, 480_000];
-  cashFlowChart.data.datasets[3].data = [extra, extra];
+  const phaseBreakdown = updateTimelinePaymentDetails(extra);
+  cashFlowChart.data.datasets[0].data = [phaseBreakdown.phase1.interestTotal, phaseBreakdown.phase2.interestTotal];
+  cashFlowChart.data.datasets[1].data = [phaseBreakdown.phase1.principal.pension, phaseBreakdown.phase2.principal.pension];
+  cashFlowChart.data.datasets[2].data = [phaseBreakdown.phase1.principal.shinhee, phaseBreakdown.phase2.principal.shinhee];
+  cashFlowChart.data.datasets[3].data = [phaseBreakdown.phase1.principal.busan, phaseBreakdown.phase2.principal.busan];
   cashFlowChart.update();
 }
 
