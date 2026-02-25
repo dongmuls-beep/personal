@@ -1,0 +1,315 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이사 전 대출 상환 전략</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-50 text-slate-800 mobile-page">
+
+    <!-- Navigation / Header -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50 mobile-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mobile-container">
+            <div class="flex justify-between h-16 mobile-nav-row">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-slate-700 mobile-brand">이사 전 대출 상환 플랜</span>
+                </div>
+                <div class="flex items-center space-x-4 mobile-meta">
+                    <span class="text-sm text-slate-500 hidden sm:block">총 부채: 6,367만 + 월 상환 목표: 40만 원 + 12개월 집중 상환</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mobile-main">
+
+        <!-- Intro Section -->
+        <section class="mb-12 text-center max-w-3xl mx-auto intro-section">
+            <h1 class="text-3xl font-bold mb-4 text-slate-900">이사 전 대출 정리 전략</h1>
+            <p class="text-lg text-slate-600 mb-6">
+                금리가 높은 부채부터 줄여야 전체 상환비용을 빨리 낮출 수 있습니다.
+                아래 플랜은 <strong>2년 안</strong>에 확실한 현금흐름을 만들고,
+                <strong>연체 없이</strong> 가성비 있게 이사비용까지 커버할 수 있는 기준안을 제시합니다.
+            </p>
+            <div class="bg-amber-50 border-l-4 border-amber-400 p-4 text-left rounded shadow-sm">
+                <p class="font-medium text-amber-800">요약 포인트</p>
+                <p class="text-amber-700 mt-1">
+                    현재 부채 총액은 <strong>6,367만원</strong>이며, 이자율이 높은 곳부터 우선 상환하는 것이 핵심입니다.
+                </p>
+            </div>
+        </section>
+
+        <!-- Current Status Dashboard -->
+        <section class="mb-16 status-dashboard">
+            <div class="flex flex-col md:flex-row items-end justify-between mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800">현재 부채 현황</h2>
+                    <p class="text-slate-500 mt-1">이자율 높은 순으로 우선순위를 정리한 기본 화면입니다.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 loan-grid">
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-red-500 card-hover relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded-bl">우선순위 1순위</div>
+                    <h3 class="text-lg font-semibold text-slate-700">부산은행 대출</h3>
+                    <div class="mt-4">
+                        <span class="text-3xl font-bold text-slate-900">4.5%</span>
+                        <span class="text-sm text-slate-500">연 이자</span>
+                    </div>
+                    <p class="mt-2 text-xl font-medium text-slate-600">4,300만원</p>
+                    <p class="mt-4 text-sm text-red-600 font-medium">전략: 최대 상환 우선 대상</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-orange-400 card-hover relative">
+                    <div class="absolute top-0 right-0 bg-orange-100 text-orange-800 text-xs font-bold px-2 py-1 rounded-bl">우선순위 2순위</div>
+                    <h3 class="text-lg font-semibold text-slate-700">삼성생명 대출</h3>
+                    <div class="mt-4">
+                        <span class="text-3xl font-bold text-slate-900">4.12%</span>
+                        <span class="text-sm text-slate-500">연 이자</span>
+                    </div>
+                    <p class="mt-2 text-xl font-medium text-slate-600">1,117만원</p>
+                    <p class="mt-4 text-sm text-slate-500">전략: 부산은행 상환 후 차례대로 상쇄</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-blue-500 card-hover relative">
+                    <div class="absolute top-0 right-0 bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded-bl">우선순위 3순위</div>
+                    <h3 class="text-lg font-semibold text-slate-700">연금부채</h3>
+                    <div class="mt-4">
+                        <span class="text-3xl font-bold text-slate-900">3.0%</span>
+                        <span class="text-sm text-slate-500">연 이자</span>
+                    </div>
+                    <p class="mt-2 text-xl font-medium text-slate-600">950만원</p>
+                    <p class="mt-4 text-sm text-blue-600 font-medium">전략: 원금은 일정하게 유지하며 안정 상환</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-emerald-500 card-hover relative">
+                    <div class="absolute top-0 right-0 bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-1 rounded-bl">우선순위 4순위</div>
+                    <h3 class="text-lg font-semibold text-slate-700">신한은행 저금리 대출</h3>
+                    <div class="mt-4">
+                        <span class="text-3xl font-bold text-slate-900">1.6%</span>
+                        <span class="text-sm text-slate-500">연 이자</span>
+                    </div>
+                    <p class="mt-2 text-xl font-medium text-slate-600">2,312만원</p>
+                    <p class="mt-4 text-sm text-slate-500">전략: 마지막에 상환 비율 조정</p>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 metrics-grid">
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="text-lg font-semibold mb-4 text-slate-700 text-center">부채 구성 비중</h3>
+                    <div class="chart-container">
+                        <canvas id="debtDoughnutChart"></canvas>
+                    </div>
+                    <p class="text-sm text-center text-slate-500 mt-4">
+                        현재 부산은행(43%)이 대부분을 차지합니다. 이자비용 감소 효율이 높습니다.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="text-lg font-semibold mb-4 text-slate-700 text-center">이자율 비교</h3>
+                    <div class="chart-container">
+                        <canvas id="rateBarChart"></canvas>
+                    </div>
+                    <p class="text-sm text-center text-slate-500 mt-4">
+                        우선순위는 단순히 금액이 아니라 금리에서 먼저 정해집니다.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Simulation Section -->
+        <section class="mb-16 bg-slate-100 rounded-2xl p-6 sm:p-10 simulation-section">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-bold text-slate-800">시뮬레이션으로 월별 추가 상환액 테스트</h2>
+                    <p class="text-slate-600 mt-2">
+                        매달 추가로 상환할 수 있는 금액을 바꿔보면 1년, 2년 뒤 부산은행 잔액이 어떻게 바뀌는지 확인할 수 있습니다.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+                    <label for="extraPaymentRange" class="block text-sm font-medium text-slate-700 mb-2">
+                        월 추가 상환액 (원): <span id="paymentValueDisplay" class="text-blue-600 font-bold text-lg">500,000</span>
+                    </label>
+                    <input type="range" id="extraPaymentRange" min="0" max="2000000" step="50000" value="500000" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                    <div class="flex justify-between text-xs text-slate-400 mt-2">
+                        <span>0원</span>
+                        <span>100만원</span>
+                        <span>200만원</span>
+                    </div>
+                    <div class="mt-4 bg-blue-50 p-3 rounded text-sm text-blue-800">
+                        포인트: 매달 상환액을 높이면 잔액 감소 속도는 빠르지만, 이사비와 고정지출을 고려해 과부하를 만들지 않는 선에서 유지하는 것이 중요합니다.
+                    </div>
+                </div>
+
+                <!-- Simulation Charts Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sim-chart-grid">
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <h3 class="text-lg font-semibold mb-2 text-slate-700">부산은행 잔액 추이 (24개월)</h3>
+                        <div class="chart-container">
+                            <canvas id="projectionChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <h3 class="text-lg font-semibold mb-2 text-slate-700">월별 고정비 구성</h3>
+                        <div class="chart-container">
+                            <canvas id="cashFlowChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 result-grid">
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
+                        <p class="text-xs text-slate-500 uppercase tracking-wide">1년 후 부산은행 잔액</p>
+                        <p id="resultBusanBalance" class="text-2xl font-bold text-slate-800 mt-1">-</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
+                        <p class="text-xs text-slate-500 uppercase tracking-wide">2년 후 부산은행 잔액</p>
+                        <p id="resultBusanBalanceYear2" class="text-2xl font-bold text-slate-800 mt-1">-</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
+                        <p class="text-xs text-slate-500 uppercase tracking-wide">예상 총 상환 가능 기간</p>
+                        <p class="text-2xl font-bold text-blue-600 mt-1">연장 가능</p>
+                        <p class="text-xs text-slate-400">연 40만원 납부 가정</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Strategy Timeline -->
+        <section class="max-w-5xl mx-auto mb-16 strategy-section">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6 text-center">2년 실행 타임라인</h2>
+
+            <div class="flex flex-wrap justify-center gap-2 mb-6 strategy-tabs" id="strategyTabs">
+                <button class="px-6 py-2 rounded-full font-medium text-sm transition-colors bg-slate-800 text-white shadow-lg strategy-tab" data-target="phase1">
+                    1단계: 지금 ~ 1년
+                </button>
+                <button class="px-6 py-2 rounded-full font-medium text-sm transition-colors bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 strategy-tab" data-target="phase2">
+                    2단계: 1~2년
+                </button>
+                <button class="px-6 py-2 rounded-full font-medium text-sm transition-colors bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 strategy-tab" data-target="phase3">
+                    3단계: 2년 이후
+                </button>
+            </div>
+
+            <!-- Tab Content: Phase 1 -->
+            <div id="phase1" class="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 strategy-content strategy-panel">
+                <div class="flex items-start gap-4 strategy-stage">
+                    <div class="bg-emerald-100 p-3 rounded-full text-2xl">①</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-emerald-800 mb-2">1단계 (0~12개월): 부산은행 4.5% 집중 상환</h3>
+                        <p class="text-slate-600 mb-4">
+                            월 소득의 변동을 고려해 생활비와 이사비를 먼저 고정하고,
+                            남는 금액을 부산은행에 집중 상환합니다. 연체 없이 상환 흐름을 고정화하는 단계입니다.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <div class="bg-slate-50 p-4 rounded-lg">
+                                <h4 class="font-bold text-slate-700 mb-2">목표</h4>
+                                <ul class="list-disc list-inside text-sm text-slate-600 space-y-1">
+                                    <li>매월 추가 상환액 0~100만원 내에서 운영</li>
+                                    <li>부산은행 잔액 감소 속도 극대화</li>
+                                    <li>매월 이사 관련 지출은 별도 유보 계정으로 관리</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-lg">
+                                <h4 class="font-bold text-slate-700 mb-2">지표</h4>
+                                <ul class="list-disc list-inside text-sm text-slate-600 space-y-1">
+                                    <li>부산은행 잔액 월별 감소: 시각적으로 체크</li>
+                                    <li>연체·연체금 발생 리스크 최소화</li>
+                                    <li>현금흐름이 0원 이하로 내려가지 않도록 조정</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Phase 2 -->
+            <div id="phase2" class="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 strategy-content hidden strategy-panel">
+                <div class="flex items-start gap-4 strategy-stage">
+                    <div class="bg-amber-100 p-3 rounded-full text-2xl">②</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-amber-800 mb-2">2단계 (13~24개월): 다른 의무 상환 시작 구간</h3>
+                        <p class="text-slate-600 mb-4">
+                            2년차에는 고정이사비/생활비 지출이 누적될 수 있어 월 상환 여력을 점검합니다.
+                            상환 목표를 유지할 수 없는 구간은 우선순위를 고정비 축소로 보완합니다.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <div class="bg-slate-50 p-4 rounded-lg">
+                                <h4 class="font-bold text-slate-700 mb-2">관리 포인트</h4>
+                                <ul class="list-disc list-inside text-sm text-slate-600 space-y-1">
+                                    <li>월 상환 잉여액 유지 여부 점검(매월)</li>
+                                    <li>연체 위험이 생기면 즉시 추가 상환 액수 조정</li>
+                                    <li>비정상 지출 항목은 1~2주 단위로 재조정</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-lg">
+                                <h4 class="font-bold text-slate-700 mb-2">결과 지표</h4>
+                                <ul class="list-disc list-inside text-sm text-slate-600 space-y-1">
+                                    <li>1년차 대비 부산은행 잔액 추가 감소</li>
+                                    <li>신규 고정비 반영 후 월말 잔액 안정화</li>
+                                    <li>현금 여유가 생기면 상환액 동결 대신 점진 상향</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Phase 3 -->
+            <div id="phase3" class="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 strategy-content hidden strategy-panel">
+                <div class="flex items-start gap-4 strategy-stage">
+                    <div class="bg-blue-100 p-3 rounded-full text-2xl">③</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-blue-800 mb-2">3단계 (25개월 이후): 부산은행 정리 후 재배치</h3>
+                        <p class="text-slate-600 mb-4">
+                            부산은행을 정리하고 남는 상환력은 저금리 대출 축소 및 비상자금 회복으로 이동합니다.
+                            이후에는 상환 리스크를 낮춘 형태의 안정 루틴으로 수렴합니다.
+                        </p>
+                        <div class="bg-blue-50 p-6 rounded-lg mt-4 border border-blue-100">
+                            <h4 class="font-bold text-blue-900 mb-4 text-center">권장 순서</h4>
+                            <div class="flex flex-col md:flex-row items-center justify-between text-center gap-4 timeline-flow">
+                                <div class="bg-white p-4 rounded shadow-sm flex-1 w-full">
+                                    <span class="block text-2xl mb-2">1순위</span>
+                                    <span class="text-sm font-bold text-slate-700">부산은행 완납</span>
+                                    <p class="text-xs text-slate-500 mt-1">4.5%</p>
+                                </div>
+                                <div class="text-blue-400 text-2xl font-bold path-arrow">→</div>
+                                <div class="bg-white p-4 rounded shadow-sm flex-1 w-full">
+                                    <span class="block text-2xl mb-2">2순위</span>
+                                    <span class="text-sm font-bold text-slate-700">삼성생명 대출 상환</span>
+                                    <p class="text-xs text-slate-500 mt-1">4.12%</p>
+                                </div>
+                                <div class="text-blue-400 text-2xl font-bold path-arrow">→</div>
+                                <div class="bg-white p-4 rounded shadow-sm flex-1 w-full">
+                                    <span class="block text-2xl mb-2">3순위</span>
+                                    <span class="text-sm font-bold text-slate-700">저금리 대출 유연 조정</span>
+                                    <p class="text-xs text-slate-500 mt-1">1.6%</p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-blue-800 mt-4 text-center">
+                                연금 원금 상환은 과도하게 앞당기지 말고, 고정지출 충당 후 여유분으로 처리합니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300 py-8 mt-12 mobile-footer">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-sm">이사 전 대출 플랜 정리 대시보드</p>
+            <p class="text-xs text-slate-500 mt-2">본 화면은 수치 시뮬레이션용으로, 실제 상환 실행 전 채무사/금융기관 내역과 대조하세요.</p>
+        </div>
+    </footer>
+
+    <script src="app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+:root {
+  --page-bg: #f8fafc;
+  --text-main: #111827;
+  --text-muted: #64748b;
+  --border-soft: #e5e7eb;
+  --shadow-soft: 0 8px 25px -14px rgba(15, 23, 42, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body.mobile-page {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--page-bg);
+  color: var(--text-main);
+}
+
+.mobile-main {
+  width: min(100%, 80rem);
+  margin-inline: auto;
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+}
+
+.mobile-nav {
+  backdrop-filter: blur(8px);
+}
+
+.mobile-container {
+  max-width: 80rem;
+}
+
+.mobile-brand {
+  letter-spacing: -0.01em;
+}
+
+.mobile-meta {
+  letter-spacing: 0.01em;
+}
+
+.intro-section {
+  padding-inline: 0.25rem;
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 300px;
+  max-height: 380px;
+}
+
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+.status-dashboard,
+.simulation-section,
+.strategy-section {
+  padding-inline: 0.25rem;
+}
+
+.strategy-panel {
+  border: 1px solid var(--border-soft);
+}
+
+.strategy-stage {
+  gap: 1rem;
+}
+
+.path-arrow {
+  min-width: 2rem;
+}
+
+.mobile-footer {
+  margin-top: 2.5rem;
+}
+
+@media (max-width: 767px) {
+  .mobile-main {
+    width: calc(100% - 1rem);
+  }
+
+  .mobile-main h1 {
+    font-size: clamp(1.6rem, 7vw, 2rem);
+    line-height: 1.3;
+  }
+
+  .mobile-main h2 {
+    font-size: clamp(1.3rem, 6vw, 1.65rem);
+    line-height: 1.35;
+  }
+
+  .loan-grid,
+  .metrics-grid,
+  .sim-chart-grid,
+  .result-grid,
+  .strategy-tabs {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .strategy-tabs {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 0.25rem;
+    scrollbar-width: none;
+  }
+
+  .strategy-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .strategy-tab {
+    flex: 0 0 auto;
+    min-width: 140px;
+    font-size: 0.875rem;
+    text-align: center;
+  }
+
+  .simulation-section {
+    padding: 1rem;
+  }
+
+  .strategy-stage {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .timeline-flow {
+    display: grid !important;
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-flow .text-blue-400 {
+    display: none;
+  }
+
+  .result-grid {
+    gap: 0.75rem;
+  }
+
+  .chart-container {
+    height: 240px;
+  }
+}
+
+@media (min-width: 768px) {
+  .loan-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .timeline-flow .text-blue-400 {
+    display: block;
+  }
+}
