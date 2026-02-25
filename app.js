@@ -1,8 +1,8 @@
 ﻿const loans = {
-  shinhee: { name: 'Shinhee-ta Mortgage', amount: 232_119_000, rate: 1.6, monthlyInterest: 309_492, type: 'mortgage' },
-  busan: { name: 'Busan Bank Loan', amount: 43_000_000, rate: 4.5, monthlyInterest: 161_250, type: 'credit' },
-  samsung: { name: 'Samsung Life Insurance', amount: 11_170_000, rate: 4.12, monthlyInterest: 38_350, type: 'insurance' },
-  pension: { name: 'Pension Loan', amount: 9_500_000, rate: 3.0, monthlyInterest: 23_750, type: 'pension' }
+  shinhee: { name: '신한은행 원리금', amount: 232_119_000, rate: 1.6, monthlyInterest: 309_492, type: 'mortgage' },
+  busan: { name: '부산은행 대출', amount: 43_000_000, rate: 4.5, monthlyInterest: 161_250, type: 'credit' },
+  samsung: { name: '삼성생명 대출', amount: 11_170_000, rate: 4.12, monthlyInterest: 38_350, type: 'insurance' },
+  pension: { name: '연금부채', amount: 9_500_000, rate: 3.0, monthlyInterest: 23_750, type: 'pension' }
 };
 
 const loanValues = Object.values(loans);
@@ -75,7 +75,7 @@ function initSimulationCharts() {
   projectionChart = new Chart(projectionCtx, {
     type: 'line',
     data: {
-      labels: Array.from({ length: 25 }, (_, i) => `${i} Month`),
+      labels: Array.from({ length: 25 }, (_, i) => `${i}개월`),
       datasets: [
         {
           label: '부산은행 잔액',
@@ -114,7 +114,7 @@ function initSimulationCharts() {
   cashFlowChart = new Chart(cashFlowCtx, {
     type: 'bar',
     data: {
-      labels: ['Year 1 (Current)', 'Year 2 (Shinhee principal starts)'],
+      labels: ['1년차(현재)', '2년차(신한 원금 시작)'],
       datasets: [
         { label: '이자', data: [], backgroundColor: '#94A3B8' },
         { label: '연금 원금', data: [pensionPrincipalMonthly, pensionPrincipalMonthly], backgroundColor: '#3B82F6' },
@@ -212,4 +212,5 @@ function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
 
