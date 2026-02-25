@@ -1,5 +1,5 @@
 ﻿const loans = {
-  shinhee: { name: '신한은행 원리금', amount: 232_119_000, rate: 1.6, monthlyInterest: 309_492, type: 'mortgage' },
+  shinhee: { name: '신희타모기지', amount: 232_119_000, rate: 1.6, monthlyInterest: 309_492, type: 'mortgage' },
   busan: { name: '부산은행 대출', amount: 43_000_000, rate: 4.5, monthlyInterest: 161_250, type: 'credit' },
   samsung: { name: '삼성생명 대출', amount: 11_170_000, rate: 4.12, monthlyInterest: 38_350, type: 'insurance' },
   pension: { name: '연금저축 담보대출', amount: 9_500_000, rate: 3.0, monthlyInterest: 23_750, type: 'pension' }
@@ -114,11 +114,11 @@ function initSimulationCharts() {
   cashFlowChart = new Chart(cashFlowCtx, {
     type: 'bar',
     data: {
-      labels: ['1년차(현재)', '2년차(신한 원금 시작)'],
+      labels: ['1년차(현재)', '2년차(신희타 원금 시작)'],
       datasets: [
         { label: '이자', data: [], backgroundColor: '#94A3B8' },
         { label: '연금 원금', data: [pensionPrincipalMonthly, pensionPrincipalMonthly], backgroundColor: '#3B82F6' },
-        { label: '신한 은행 원금', data: [0, shinheePrincipalMonthlyStartYear2], backgroundColor: '#10B981' },
+        { label: '신희타 원금', data: [0, shinheePrincipalMonthlyStartYear2], backgroundColor: '#10B981' },
         { label: '추가 상환', data: [], backgroundColor: '#EF4444' }
       ]
     },
